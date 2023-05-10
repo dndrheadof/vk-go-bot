@@ -1,8 +1,0 @@
-2023/05/10 19:42:21 [LPResponse] &{Ts: Updates:[] FailedCode:0}
-2023/05/10 19:42:21 Пришла ошибка от LP: 1
-2023/05/10 19:42:21 История устарела
-2023/05/10 19:42:21 [LPResponse] &{Ts:32 Updates:[] FailedCode:1}
-2023/05/10 19:42:26 [LPResponse] &{Ts: Updates:[] FailedCode:0}
-2023/05/10 19:42:26 Пришла ошибка от LP: 1
-2023/05/10 19:42:26 История устарела
-2023/05/10 19:42:26 [LPResponse] &{Ts:32 Updates:[] FailedCode:1}

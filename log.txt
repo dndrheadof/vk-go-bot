@@ -1,6 +1,8 @@
-2023/05/10 10:00:32 Вызываю метод groups.getLongPollServer
-2023/05/10 10:00:41 Вызываю метод groups.getLongPollServer
-2023/05/10 10:00:42 [LPResponse] &{Ts:381 Updates:[{Type:message_event Object:map[event_id:7737e462e103 payload:map[command:snackbar] peer_id:1.71582356e+08 user_id:1.71582356e+08] GroupID:220378402}]}
-2023/05/10 10:00:42 Вызываю метод messages.sendMessageEventAnswer
-2023/05/10 10:00:43 [LPResponse] &{Ts:382 Updates:[{Type:message_new Object:map[client_info:map[button_actions:[text vkpay open_app location open_link callback intent_subscribe intent_unsubscribe] carousel:true inline_keyboard:true keyboard:true lang_id:0] message:map[attachments:[] conversation_message_id:537 date:1.683702042e+09 from_id:1.71582356e+08 fwd_messages:[] id:560 important:false is_hidden:false out:0 payload:{"command":"mainmenu"} peer_id:1.71582356e+08 random_id:0 text:Назад]] GroupID:220378402}]}
-2023/05/10 10:00:43 Вызываю метод messages.send
+2023/05/10 19:42:21 [LPResponse] &{Ts: Updates:[] FailedCode:0}
+2023/05/10 19:42:21 Пришла ошибка от LP: 1
+2023/05/10 19:42:21 История устарела
+2023/05/10 19:42:21 [LPResponse] &{Ts:32 Updates:[] FailedCode:1}
+2023/05/10 19:42:26 [LPResponse] &{Ts: Updates:[] FailedCode:0}
+2023/05/10 19:42:26 Пришла ошибка от LP: 1
+2023/05/10 19:42:26 История устарела
+2023/05/10 19:42:26 [LPResponse] &{Ts:32 Updates:[] FailedCode:1}

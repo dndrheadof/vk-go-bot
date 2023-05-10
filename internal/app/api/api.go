@@ -20,6 +20,7 @@ type Api struct {
 	Token   string
 	Url     string
 	Version string
+	LPData  LongPollSessionData
 	Client  *fasthttp.Client
 }
 
@@ -76,7 +77,6 @@ func (api *Api) SendRequest(url string, params []byte, response interface{}) err
 	defer fasthttp.ReleaseResponse(res)
 	req.SetBody(params)
 	req.Header.SetMethod("POST")
-	// req.Header.SetContentType("application/x-www-form-urlencoded")
 	req.SetRequestURI(url)
 
 	api.Client.Do(req, res)
@@ -87,35 +87,4 @@ func (api *Api) SendRequest(url string, params []byte, response interface{}) err
 	}
 
 	return json.Unmarshal(body, response)
-
-	// req, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(params))
-	// if err != nil {
-	// 	log.Printf("ОШИБКА: %v\n", err)
-
-	// 	return err
-	// }
-	// fmt.Printf("[POST] %v\n", req.URL.String())
-
-	// res, err := api.Client.Do(req)
-	// if err != nil {
-	// 	log.Printf("ОШИБКА: %v\n", err)
-
-	// 	return fmt.Errorf("ошибка отправки запроса: %w", err)
-	// }
-
-	// bytes, err := io.ReadAll(res.Body)
-	// if err != nil {
-	// 	log.Printf("ОШИБКА: %v\n", err)
-
-	// 	fmt.Println(string(bytes))
-	// 	return err
-	// }
-	// if res.StatusCode != http.StatusOK {
-
-	// 	return fmt.Errorf("[APIERR]: %d", res.StatusCode)
-	// }
-
-	// log.Printf("Ответ от ВК: %+s", string(bytes))
-
-	// return json.Unmarshal(bytes, &response)
 }

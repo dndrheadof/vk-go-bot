@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/url"
 )
@@ -13,12 +14,19 @@ type LongPollSessionData struct {
 }
 
 type Longpoll struct {
+	GroupID         int
 	Api             *Api
 	Params          url.Values
 	Server          string
 	NewMessage      chan Message
 	NewMessageEvent chan MessageEvent
 }
+
+const (
+	LPHistoryOld = 1
+	LPKeyExpired = 2
+	LPInfoLost   = 3
+)
 
 func NewLongpoll(api *Api, groupID int) (*Longpoll, error) {
 	res := LPSetupResponse{}
@@ -38,6 +46,7 @@ func NewLongpoll(api *Api, groupID int) (*Longpoll, error) {
 	urlParams.Add("key", res.Response.Key)
 
 	return &Longpoll{
+		GroupID:         groupID,
 		Api:             api,
 		Params:          urlParams,
 		Server:          res.Response.Server,
@@ -56,13 +65,29 @@ func (lp *Longpoll) Fetch() (*LongpollResponse, error) {
 		return nil, err
 	}
 
-	if res.Ts == "" {
-		return nil, nil
+	if res.FailedCode > 0 {
+		log.Printf("Пришла ошибка от LP: %d\n", res.FailedCode)
+		switch res.FailedCode {
+		case LPKeyExpired, LPInfoLost:
+			upd := &LPSetupResponse{}
+			log.Println("LP ключ устарел, получаем новый")
+
+			err := lp.Api.CallMethod("groups.getLongPollServer", map[string]interface{}{
+				"group_id": lp.GroupID,
+			}, &upd)
+			if err != nil {
+				return nil, fmt.Errorf("произошла ошибка при рефреше ключа: %+v", err)
+			}
+			lp.Params.Set("key", upd.Response.Key)
+		case LPHistoryOld:
+			log.Println("История устарела")
+			lp.Params.Set("ts", fmt.Sprint(res.Ts))
+		}
 	}
 
 	log.Printf("[LPResponse] %+v", res)
 
-	lp.Params.Set("ts", res.Ts)
+	lp.Params.Set("ts", fmt.Sprint(res.Ts))
 
 	return res, nil
 }

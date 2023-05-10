@@ -1,5 +1,7 @@
 package api
 
+import "encoding/json"
+
 type (
 	LPSetupResponse struct {
 		Response struct {
@@ -42,7 +44,8 @@ type (
 	}
 
 	LongpollResponse struct {
-		Ts      string            `json:"ts"`
-		Updates []LongpollMessage `json:"updates"`
+		Ts         json.Number       `json:"ts"`
+		Updates    []LongpollMessage `json:"updates"`
+		FailedCode int               `json:"failed"`
 	}
 )
